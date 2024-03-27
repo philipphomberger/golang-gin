@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
+
 	r := gin.Default()
 
 	// Routes defined in the routes package
@@ -14,6 +15,7 @@ func main() {
 		routes.GET("/user/:name", getUser)
 		routes.GET("/albums", getAlbums)
 		routes.POST("/albums", postAlbum)
+		routes.DELETE("/albums", deleteAlbum)
 	}
 
 	r.Run(":8080")
