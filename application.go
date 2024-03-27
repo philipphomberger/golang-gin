@@ -15,7 +15,7 @@ func main() {
 		routes.GET("/user/:name", getUser)
 		routes.GET("/albums", getAlbums)
 		routes.POST("/albums", postAlbum)
-		routes.DELETE("/albums", deleteAlbum)
+		routes.DELETE("/albums/:id", deleteAlbum)
 	}
 
 	r.Run(":8080")

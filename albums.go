@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -33,13 +32,10 @@ func postAlbum(c *gin.Context) {
 }
 
 func deleteAlbum(c *gin.Context) {
-	var delAlbum album
+	id := c.Param("id")
 	for i, s := range albums {
-		fmt.Println(s.ID, delAlbum.ID)
-		if s.ID == delAlbum.ID {
-			fmt.Println(i, s)
-			fmt.Println(s.ID)
-		}
+		if s.ID == id {
+			albums =
 	}
-	c.IndentedJSON(http.StatusOK, delAlbum)
+	c.IndentedJSON(http.StatusOK, id)
 }
