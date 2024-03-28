@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ginapi/configs"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,9 @@ func main() {
 		routes.POST("/albums", postAlbum)
 		routes.DELETE("/albums/:id", deleteAlbum)
 	}
+
+	//run database
+	configs.ConnectDB()
 
 	r.Run(":8080")
 }
