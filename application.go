@@ -1,27 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"ginapi/configs"
+	"ginapi/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
 	r := gin.Default()
-
-	// Routes defined in the routes package
-	routes := r.Group("/api")
-	{
-		routes.GET("/", getHome)
-		routes.GET("/user/:name", getUser)
-		routes.GET("/albums", getAlbums)
-		routes.POST("/albums", postAlbum)
-		routes.DELETE("/albums/:id", deleteAlbum)
-	}
-
+	routes.AlbumsRoute(r)
 	//run database
-	configs.ConnectDB()
-
+	var client = configs.ConnectDB()
+	fmt.Println(configs.GetCollection(client, "albums"))
 	r.Run(":8080")
 }
 
