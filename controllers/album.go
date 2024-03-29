@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"ginapi/configs"
 	"ginapi/models"
 	"ginapi/responses"
+	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
 	"time"
 
@@ -49,5 +51,24 @@ func CreateAlbum() gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": result}})
+	}
+}
+
+func GetAlbum() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		result, err := albumsCollection.Find(ctx, bson.D{{}})
+		if err != nil {
+			panic(err)
+		}
+		var results []bson.M
+		if err := result.All(ctx, &results); err != nil {
+			panic(err)
+		}
+		for _, doc := range results {
+			fmt.Println(doc)
+		}
+		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": results}})
 	}
 }
