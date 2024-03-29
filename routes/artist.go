@@ -6,9 +6,9 @@ import (
 )
 
 func ArtistsRoute(router *gin.Engine) {
-	router.POST("/artists", controllers.CreateAlbum())
-	router.GET("/artists", controllers.GetAlbums())
-	router.GET("/artists/:id", controllers.GetAlbum())
-	router.DELETE("/artists/:id", controllers.DelAlbum())
-	router.PUT("/artists/:id", controllers.PutAlbum())
+	router.POST("/artists", controllers.CreateArtist())
+	router.GET("/artists", controllers.GetArtists())
+	router.GET("/artists/:id", controllers.GetArtist())
+	router.DELETE("/artists/:id", controllers.DelArtist())
+	router.PUT("/artists/:id", controllers.PutArtist())
 }
