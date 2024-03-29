@@ -15,7 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var songsCollection *mongo.Collection = configs.GetCollection(configs.DB, "artists")
+var songsCollection *mongo.Collection = configs.GetCollection(configs.DB, "songs")
 
 func CreateSong() gin.HandlerFunc {
 	return func(c *gin.Context) {
