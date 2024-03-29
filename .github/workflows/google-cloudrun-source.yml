@@ -1,4 +1,4 @@
-name: Deploy to Cloud Run from Source
+name: Deploy to Google Cloud Run
 
 on:
   push:
@@ -29,8 +29,10 @@ jobs:
 
       - name: Create Env File
         run: |
-          echo '${{ secrets.env }}' > .env
+          echo "$secret" > .env
           rm -f .gitignore
+        env:
+          secret: ${{ secrets.env }}
 
       - name: Deploy to Cloud Run
         id: deploy
