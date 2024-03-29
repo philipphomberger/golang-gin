@@ -30,9 +30,7 @@ jobs:
       - name: Create Env File
         run: |
           echo '${{ secrets.env }}' > .env
-          cat .env
           rm -f .gitignore
-
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -40,8 +38,9 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          # NOTE: If required, update to the appropriate source folder
+          skip_default_labels: true
           source: ./
+          
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
