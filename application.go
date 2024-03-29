@@ -14,6 +14,7 @@ func main() {
 	routes.AlbumsRoute(r)
 	routes.ArtistsRoute(r)
 	routes.BandRoute(r)
+	routes.SongsRoute(r)
 	//run database
 	configs.ConnectDB()
 	// Run Server
