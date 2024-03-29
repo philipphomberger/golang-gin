@@ -10,6 +10,7 @@ func main() {
 
 	r := gin.Default()
 	routes.AlbumsRoute(r)
+	routes.ArtistsRoute(r)
 	//run database
 	configs.ConnectDB()
 	r.Run(":8080")
