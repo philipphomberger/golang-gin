@@ -29,7 +29,7 @@ jobs:
 
       - name: Create Env File
         run: |
-          echo '${{ secrets.GCP_CREDENTIALS }}' > .env
+          echo '${{ secrets.env }}' > .env
           cat .env
           rm -f .gitignore
 
