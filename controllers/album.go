@@ -92,3 +92,63 @@ func GetAlbum() gin.HandlerFunc {
 		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": result}})
 	}
 }
+
+func DelAlbum() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		var result models.Album
+		objectId, err := primitive.ObjectIDFromHex(c.Param("id"))
+		filter := bson.D{{"_id", objectId}}
+		err = albumsCollection.FindOneAndDelete(ctx, filter).Decode(&result)
+		fmt.Println(result)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				return
+			}
+			panic(err)
+		}
+		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success delete", Data: map[string]interface{}{"data": result}})
+	}
+}
+
+func PutAlbum() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		var result models.Album
+		var album = models.Album{}
+
+		//validate the request body
+		if err := c.BindJSON(&album); err != nil {
+			c.JSON(http.StatusBadRequest, responses.AlbumResponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": err.Error()}})
+			return
+		}
+
+		//use the validator library to validate required fields
+		if validationErr := validate.Struct(&album); validationErr != nil {
+			c.JSON(http.StatusBadRequest, responses.AlbumResponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": validationErr.Error()}})
+			return
+		}
+
+		newAlbum := models.Album{
+			ID:     primitive.NewObjectID(),
+			Title:  album.Title,
+			Artist: album.Artist,
+			Price:  album.Price,
+		}
+
+		objectId, err := primitive.ObjectIDFromHex(c.Param("id"))
+		filter := bson.D{{"_id", objectId}}
+		err = albumsCollection.FindOneAndReplace(ctx, filter, newAlbum).Decode(&result)
+
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				return
+			}
+			panic(err)
+		}
+
+		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success replaced", Data: map[string]interface{}{"data": newAlbum}})
+	}
+}
