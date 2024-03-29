@@ -69,7 +69,7 @@ func GetAlbums() gin.HandlerFunc {
 		for _, doc := range results {
 			fmt.Println(doc)
 		}
-		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": results}})
+		c.JSON(http.StatusOK, responses.AlbumResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": results}})
 	}
 }
 
@@ -89,7 +89,7 @@ func GetAlbum() gin.HandlerFunc {
 			}
 			panic(err)
 		}
-		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": result}})
+		c.JSON(http.StatusOK, responses.AlbumResponse{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": result}})
 	}
 }
 
@@ -108,7 +108,7 @@ func DelAlbum() gin.HandlerFunc {
 			}
 			panic(err)
 		}
-		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success delete", Data: map[string]interface{}{"data": result}})
+		c.JSON(http.StatusOK, responses.AlbumResponse{Status: http.StatusOK, Message: "success delete", Data: map[string]interface{}{"data": result}})
 	}
 }
 
