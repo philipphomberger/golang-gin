@@ -4,6 +4,7 @@ import (
 	"ginapi/configs"
 	"ginapi/routes"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -16,5 +17,8 @@ func main() {
 	//run database
 	configs.ConnectDB()
 	// Run Server
-	r.Run(":8080")
+	err := r.Run(":8080")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
