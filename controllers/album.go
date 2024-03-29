@@ -54,7 +54,7 @@ func CreateAlbum() gin.HandlerFunc {
 	}
 }
 
-func GetAlbum() gin.HandlerFunc {
+func GetAlbums() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
@@ -70,5 +70,25 @@ func GetAlbum() gin.HandlerFunc {
 			fmt.Println(doc)
 		}
 		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": results}})
+	}
+}
+
+func GetAlbum() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		fmt.Println(c.Param("id"))
+		var result models.Album
+		objectId, err := primitive.ObjectIDFromHex(c.Param("id"))
+		filter := bson.D{{"_id", objectId}}
+		err = albumsCollection.FindOne(ctx, filter).Decode(&result)
+		fmt.Println(result)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				return
+			}
+			panic(err)
+		}
+		c.JSON(http.StatusCreated, responses.AlbumResponse{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": result}})
 	}
 }

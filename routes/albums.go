@@ -7,5 +7,6 @@ import (
 
 func AlbumsRoute(router *gin.Engine) {
 	router.POST("/albums", controllers.CreateAlbum())
-	router.GET("/albums", controllers.GetAlbum())
+	router.GET("/albums", controllers.GetAlbums())
+	router.GET("/albums/:id", controllers.GetAlbum())
 }
