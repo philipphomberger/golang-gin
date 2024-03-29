@@ -7,7 +7,7 @@ on:
 env:
   PROJECT_ID:  musikapi-418715
   SERVICE: golang-gin
-  REGION: 16
+  REGION: europe-west1
 
 jobs:
   deploy:
