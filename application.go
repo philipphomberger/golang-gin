@@ -3,18 +3,12 @@ package main
 import (
 	"ginapi/configs"
 	"ginapi/routes"
-	"github.com/gin-gonic/gin"
 	"log"
 )
 
 func main() {
 	// Create Gin Instance
-	r := gin.Default()
-	// Add Gin Routes
-	routes.AlbumsRoute(r)
-	routes.ArtistsRoute(r)
-	routes.BandRoute(r)
-	routes.SongsRoute(r)
+	r := routes.SetupRouter()
 	//run database
 	configs.ConnectDB()
 	// Run Server

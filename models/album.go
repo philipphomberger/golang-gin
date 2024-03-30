@@ -8,3 +8,8 @@ type Album struct {
 	Artist string             `json:"artist,omitempty" validate:"required"`
 	Price  float64            `json:"price,omitempty" validate:"required"`
 }
+
+func getAlbumStruct() Album {
+	var album Album
+	return album
+}
