@@ -21,6 +21,7 @@ jobs:
     - name: Create Env File
       run: |
         echo "$secret" > .env
+        echo "$secret" > ./routes/.env
         rm -f .gitignore
       env:
         secret: ${{ secrets.env }}
