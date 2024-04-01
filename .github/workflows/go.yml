@@ -18,6 +18,13 @@ jobs:
       with:
         go-version: '1.22'
 
+    - name: Create Env File
+      run: |
+        echo "$secret" > .env
+        rm -f .gitignore
+      env:
+        secret: ${{ secrets.env }}
+
     - name: Build
       run: go build -v ./...
 
